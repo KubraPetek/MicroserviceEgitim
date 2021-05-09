@@ -25,7 +25,7 @@ namespace FreeCource.Service.Catalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddAutoMapper(typeof(Startup));//Bu classa baðlý tüm mapperlarý tarayacak
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
