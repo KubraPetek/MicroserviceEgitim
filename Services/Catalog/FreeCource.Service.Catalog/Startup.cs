@@ -29,6 +29,7 @@ namespace FreeCource.Service.Catalog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ICategoryService, CategoryService>();// ICategoryService aldýðýnda CategoryService döndür --Dolu bir kategor servis dönecek
+            services.AddScoped<ICourseService, CourseService>();
 
             services.AddAutoMapper(typeof(Startup));//Bu classa baðlý tüm mapperlarý tarayacak
             services.AddControllers();
