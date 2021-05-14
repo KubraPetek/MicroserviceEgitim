@@ -4,9 +4,7 @@ using FreeCource.Service.Catalog.Models;
 using FreeCource.Service.Catalog.Settings;
 using FreeCourse.Shared.Dtos;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FreeCource.Service.Catalog.Services
@@ -29,9 +27,9 @@ namespace FreeCource.Service.Catalog.Services
             var categories = await _categoryCollection.Find(category => true).ToListAsync();//Tüm dataları al 
             return Response<List<CategoryDto>>.Success(_mapper.Map<List<CategoryDto>>(categories), 200);
         }
-        public async Task<Response<CategoryDto>> CreateAsync(Category category)
+        public async Task<Response<CategoryDto>> CreateAsync(CategoryDto categoryDto)
         {
-
+            var category = _mapper.Map<Category>(categoryDto);
           await _categoryCollection.InsertOneAsync(category);
             return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category),200);//200 -OK 
 
