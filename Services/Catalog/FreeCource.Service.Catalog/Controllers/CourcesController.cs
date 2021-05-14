@@ -30,6 +30,7 @@ namespace FreeCource.Service.Catalog.Controllers
 
         }
         //[HttpGet("{userId}")]  -->Bu şekilde yazarsak GetById ile karışacak
+        [HttpGet]
         [Route("/api/[controller]/GetByUserId/{userId}")]//daha spesifik bir route'lama 
         public async Task<IActionResult> GetByUserId(string userId)
         {
@@ -38,6 +39,7 @@ namespace FreeCource.Service.Catalog.Controllers
             return CreateActionResultInstance(response);
 
         }
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var response = await _courseService.GetAllAsnyc();
