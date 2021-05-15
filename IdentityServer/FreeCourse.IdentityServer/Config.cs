@@ -52,10 +52,12 @@ namespace FreeCourse.IdentityServer
                  //Kullanıcı giriş yaptıktan sonra 60 gün içinde hiç giriş ektranı ile karşılaşmayacak ama 60 gün içinde herhangi bir zamanda giriş yapmayıp 61.gün de girerse tekra giriş ekranına gidecek --çünkü refresh token ömrü dolmuş olacak 
                  ClientId="WebMvcClientForUsers",
                  ClientName="Asp.Net Core MVC",
+                 AllowOfflineAccess=true,
                  ClientSecrets={new Secret("secret".Sha256())},
                  AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,//refresh token da oluşturur
                  AllowedScopes={IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId, 
-                     IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess },//Offlineaccess refresh token üretir -offline olsa dahi
+                     IdentityServerConstants.StandardScopes.Profile,IdentityServerConstants.LocalApi.ScopeName
+                     , IdentityServerConstants.StandardScopes.OfflineAccess },//Offlineaccess refresh token üretir -offline olsa dahi
                  AccessTokenLifetime=1*60*60,//1 saat kullanım belirledik -->token için
                  RefreshTokenExpiration=TokenExpiration.Absolute, //verilen süre sonunda refresh tokenin ömrü dolmuş olacak
                  AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,//60 günlük saniye verdik-->refresh tokenın ömrü 
