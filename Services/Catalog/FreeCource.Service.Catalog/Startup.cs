@@ -1,8 +1,10 @@
 using FreeCource.Service.Catalog.Services;
 using FreeCource.Service.Catalog.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,11 +30,22 @@ namespace FreeCource.Service.Catalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Bu kýsým CVatalog api yi Identity server ile koruma altýna almak için eklendi
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["IdentityServerURL"];
+                options.Audience = "resorce_catalog";
+                options.RequireHttpsMetadata = false;
+            });
+
             services.AddScoped<ICategoryService, CategoryService>();// ICategoryService aldýðýnda CategoryService döndür --Dolu bir kategor servis dönecek
             services.AddScoped<ICourseService, CourseService>();
 
             services.AddAutoMapper(typeof(Startup));//Bu classa baðlý tüm mapperlarý tarayacak
-            services.AddControllers();
+            services.AddControllers(opt=> {
+
+                opt.Filters.Add(new AuthorizeFilter());//Tüm controller lara tek tek Authorize eklemek yerine burdan tek seferde eklemiþ olduk
+            });
 
 
             //appsettingden database bilgilerini okumak için 
@@ -49,6 +62,8 @@ namespace FreeCource.Service.Catalog
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreeCource.Service.Catalog", Version = "v1" });
             });
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +78,7 @@ namespace FreeCource.Service.Catalog
 
             app.UseRouting();
 
+            app.UseAuthentication();//artýk bu mikroservis koruma altýnda 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
