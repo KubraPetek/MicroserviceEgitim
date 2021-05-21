@@ -37,7 +37,7 @@ namespace FreeCourse.Service.Basket
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.Authority = Configuration["IdentityServerURL"];
-                options.Audience = "resorce_catalog";
+                options.Audience = "resource_basket";
                 options.RequireHttpsMetadata = false;
             }); 
 
