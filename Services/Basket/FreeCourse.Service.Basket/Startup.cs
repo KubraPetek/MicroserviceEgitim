@@ -31,6 +31,7 @@ namespace FreeCourse.Service.Basket
         {
             services.AddHttpContextAccessor(); //Contexten user bilgisi alabilmek için eklendi
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();//Shared altýna tanýmladýðýmýz contexten user döndüren metodu kullanabilmek için ekledik
+            services.AddScoped<IBasketService, BasketService>();
 
             services.Configure<RedisSettings>(Configuration.GetSection("RedisSettings"));
 
