@@ -22,6 +22,8 @@ namespace FreeCourse.Service.Basket.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBasket()
         {
+            var claism = User.Identity;
+
             return CreateActionResultInstance(await _basketService.GetBasket(_sharedIdentityService.GetUserId));
         }
         [HttpPost]
