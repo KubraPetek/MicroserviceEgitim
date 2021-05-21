@@ -1,5 +1,6 @@
 using FreeCourse.Service.Basket.Services;
 using FreeCourse.Service.Basket.Settings;
+using FreeCourse.Shared.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,9 @@ namespace FreeCourse.Service.Basket
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor(); //Contexten user bilgisi alabilmek için eklendi
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();//Shared altýna tanýmladýðýmýz contexten user döndüren metodu kullanabilmek için ekledik
+
             services.Configure<RedisSettings>(Configuration.GetSection("RedisSettings"));
 
             services.AddSingleton<RedisService>(sp =>

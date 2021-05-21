@@ -5,7 +5,7 @@
   </PropertyGroup>
    <!--Shared projesi bu framework içindeki tüm kütüphanelere artık erişebilir, nuget veya referans veremediğimizden  controller dan base alabilmek içn bunu ekledik-->
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
 </Project>
