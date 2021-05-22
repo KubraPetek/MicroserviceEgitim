@@ -1,3 +1,5 @@
+using FreeCourse.Service.Discount.Services;
+using FreeCourse.Shared.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -24,6 +26,10 @@ namespace FreeCourse.Service.Discount
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();//IHttpContextAccessor kullanabilmek için ekledik
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();//IHttpContextAccessor kullanabilmek için ekledik
+            services.AddScoped<IDiscountService, DiscountService>();//Controllerda DiscountService kullanabilmek için ekledik
+
             var requiredAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");//sub ý maplerken ismini deðiþtirmesin diye ekledik 
             //BasketApý'yi IdentityServer ile koruma altýna aldýk
