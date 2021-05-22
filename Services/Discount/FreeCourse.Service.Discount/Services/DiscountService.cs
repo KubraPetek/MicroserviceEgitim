@@ -44,7 +44,7 @@ namespace FreeCourse.Service.Discount.Services
             {
                 return Response<Model.Discount>.Fail("Discount Not Found", 404);
             }
-            return Response<Model.Discount>.Success(hasDiscount, 204);
+            return Response<Model.Discount>.Success(hasDiscount, 200);
         }
 
         public async Task<Response<Model.Discount>> GetById(int id)
@@ -73,7 +73,8 @@ namespace FreeCourse.Service.Discount.Services
             {  //Burda direkt olarak discount objesini de gönderebilirdik, o zaman otomatik maplerdi 
                 Id = discount.Id,   
                 UserId = discount.UserId,
-                Rate = discount.Rate
+                Rate = discount.Rate,
+                Code = discount.Code
             });
             if (status>0)
             {
