@@ -19,6 +19,10 @@ namespace FreeCourse.Services.Order.Domain.OrderAggregate
 
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems; //alanı önce private belirleyip kapsülledik , sonrasında sadece okuma olarak dışarıya açmış olduk
 
+        public Order()
+        {
+
+        }
         public Order(string buyerId, Address address)
         {
             _orderItems = new List<OrderItem>();
