@@ -6,12 +6,77 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5011//Catalog bu porttan ayaða kalkýyor 
+          "Port": 5011 //Catalog bu porttan ayaða kalkýyor 
         }
       ],
       "UpstreamPathTemplate": "/services/catalog/{everything}", //everything ocelot dan geliyor  --Burasý client tarafý burdan gelen isteði Catalog api ye yönlendirmemiz lazým 
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamSchema": "http" //Sadece http üzerinden istek yapabilsin diye 
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5012 //PhotoStock bu porttan ayaða kalkýyor 
+        }
+      ],
+      "UpstreamPathTemplate": "/services/photostock/{everything}", 
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http" 
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5013 //Basket bu porttan ayaða kalkýyor 
+        }
+      ],
+      "UpstreamPathTemplate": "/services/basket/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5014 //Discount bu porttan ayaða kalkýyor 
+        }
+      ],
+      "UpstreamPathTemplate": "/services/discount/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5015 //Order bu porttan ayaða kalkýyor 
+        }
+      ],
+      "UpstreamPathTemplate": "/services/order/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5016 //FakePayment bu porttan ayaða kalkýyor 
+        }
+      ],
+      "UpstreamPathTemplate": "/services/fakepayment/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http"
     }
   ],
   "GlobalConfiguration": {
