@@ -20,6 +20,7 @@ namespace FreeCourse.IdentityServer
             new ApiResource("resource_discount"){Scopes={"discount_fullpermission"}},
             new ApiResource("resource_order"){Scopes={"order_fullpermission"}},
             new ApiResource("resource_payment"){Scopes={"payment_fullpermission"}},
+            new ApiResource("resource_gateway"){Scopes={"gateway_fullpermission"}},
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
         public static IEnumerable<IdentityResource> IdentityResources => //burası kullanıcı ile ilgili erişilebilecek  işlemleri tanımlar
@@ -41,6 +42,7 @@ namespace FreeCourse.IdentityServer
                new ApiScope("discount_fullpermission","DiscountAPI için full erişim"),
                new ApiScope("order_fullpermission","OrderAPI için full erişim"),
                new ApiScope("payment_fullpermission","Payment için full erişim"),
+               new ApiScope("gateway_fullpermission","Gateway için full erişim"),
                new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -53,7 +55,7 @@ namespace FreeCourse.IdentityServer
                  ClientName="Asp.Net Core MVC",
                  ClientSecrets={new Secret("secret".Sha256())},//şifrelemek için
                  AllowedGrantTypes=GrantTypes.ClientCredentials,//izin verilen izin tipleri
-                 AllowedScopes={ "catalog_fullpermission","photo_stock_fullpermission",IdentityServerConstants.LocalApi.ScopeName }//izin verilen scopelar
+                 AllowedScopes={ "catalog_fullpermission","photo_stock_fullpermission", "gateway_fullpermission", IdentityServerConstants.LocalApi.ScopeName }//izin verilen scopelar
              },
              new Client //kulanıcı adı ve şifre ile erişim için oluşturulan client
              {
@@ -63,8 +65,9 @@ namespace FreeCourse.IdentityServer
                  AllowOfflineAccess=true,
                  ClientSecrets={new Secret("secret".Sha256())},
                  AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,//refresh token da oluşturur
-                 AllowedScopes={"basket_fullpermission","discount_fullpermission","order_fullpermission","payment_fullpermission",IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId, 
-                     IdentityServerConstants.StandardScopes.Profile,IdentityServerConstants.LocalApi.ScopeName
+                 AllowedScopes={"basket_fullpermission","discount_fullpermission","order_fullpermission","payment_fullpermission","gateway_fullpermission"
+                     ,IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId
+                     , IdentityServerConstants.StandardScopes.Profile,IdentityServerConstants.LocalApi.ScopeName
                      , IdentityServerConstants.StandardScopes.OfflineAccess },//Offlineaccess refresh token üretir -offline olsa dahi
                  AccessTokenLifetime=1*60*60,//1 saat kullanım belirledik -->token için
                  RefreshTokenExpiration=TokenExpiration.Absolute, //verilen süre sonunda refresh tokenin ömrü dolmuş olacak
