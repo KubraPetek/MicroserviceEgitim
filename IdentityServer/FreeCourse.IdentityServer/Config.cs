@@ -19,6 +19,7 @@ namespace FreeCourse.IdentityServer
             new ApiResource("resource_basket"){Scopes={"basket_fullpermission"}},
             new ApiResource("resource_discount"){Scopes={"discount_fullpermission"}},
             new ApiResource("resource_order"){Scopes={"order_fullpermission"}},
+            new ApiResource("resource_payment"){Scopes={"payment_fullpermission"}},
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
         public static IEnumerable<IdentityResource> IdentityResources => //burası kullanıcı ile ilgili erişilebilecek  işlemleri tanımlar
@@ -39,6 +40,7 @@ namespace FreeCourse.IdentityServer
                new ApiScope("basket_fullpermission","BasketAPI için full erişim"),
                new ApiScope("discount_fullpermission","DiscountAPI için full erişim"),
                new ApiScope("order_fullpermission","OrderAPI için full erişim"),
+               new ApiScope("payment_fullpermission","Payment için full erişim"),
                new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -61,7 +63,7 @@ namespace FreeCourse.IdentityServer
                  AllowOfflineAccess=true,
                  ClientSecrets={new Secret("secret".Sha256())},
                  AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,//refresh token da oluşturur
-                 AllowedScopes={"basket_fullpermission","discount_fullpermission","order_fullpermission",IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId, 
+                 AllowedScopes={"basket_fullpermission","discount_fullpermission","order_fullpermission","payment_fullpermission",IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId, 
                      IdentityServerConstants.StandardScopes.Profile,IdentityServerConstants.LocalApi.ScopeName
                      , IdentityServerConstants.StandardScopes.OfflineAccess },//Offlineaccess refresh token üretir -offline olsa dahi
                  AccessTokenLifetime=1*60*60,//1 saat kullanım belirledik -->token için
