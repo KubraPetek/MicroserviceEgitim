@@ -32,6 +32,8 @@ namespace FreeCourse.Web
 
             var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
 
+            services.AddScoped<ResourceOwnerPasswordTokenHandler>();//Tüm handlerlar servis olarak buraya eklenmeli 
+
             services.AddHttpClient<IUserService, UserService>(opt =>
             {
                 opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
