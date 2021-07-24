@@ -36,6 +36,8 @@ namespace FreeCourse.Web
             });
 
 
+            services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();//HttpClient kullanýlan her servis buraya eklenmeli
+
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
 
