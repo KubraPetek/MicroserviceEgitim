@@ -32,9 +32,59 @@ namespace FreeCourse.Web.Services
             _serviceApiSettings = serviceApiSettings.Value;
         }
 
-        public Task<TokenResponse> GetAccessTokenByRefreshToken()
+        public async Task<TokenResponse> GetAccessTokenByRefreshToken()
         {
-            throw new NotImplementedException();
+            var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
+            {
+                Address = _serviceApiSettings.BaseUri,
+                Policy = new DiscoveryPolicy { RequireHttps = false }  
+            });
+
+
+            if (disco.IsError)
+            {
+                throw disco.Exception;
+            }
+
+            var refreshToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
+
+            RefreshTokenRequest refreshTokenRequest = new()
+            {
+                ClientId = _clientSettings.WebClientForUser.ClientId,
+                ClientSecret = _clientSettings.WebClientForUser.ClientSecret,
+                RefreshToken = refreshToken,
+                Address = disco.TokenEndpoint
+            };
+
+            var token = await _httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
+
+            if (token.IsError)
+            {
+                return null;
+            }
+
+
+            var authenticationTokens= new List<AuthenticationToken>()
+            {
+
+                new AuthenticationToken{Name=OpenIdConnectParameterNames.AccessToken,Value=token.AccessToken},
+                new AuthenticationToken{Name=OpenIdConnectParameterNames.RefreshToken,Value=token.RefreshToken},
+                new AuthenticationToken{Name=OpenIdConnectParameterNames.ExpiresIn,Value=DateTime.Now.AddSeconds(token.ExpiresIn).ToString("o",CultureInfo.InvariantCulture)}
+            };
+
+
+            var authenticationResults = await _httpContextAccessor.HttpContext.AuthenticateAsync();
+
+            var properties = authenticationResults.Properties;
+
+            properties.StoreTokens(authenticationTokens);
+
+
+            //Artık cookie oluşturabiliriz
+
+            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, authenticationResults.Principal, properties);
+
+            return token;
         }
 
         public Task RevokeRefreshToken()
