@@ -32,7 +32,7 @@ namespace FreeCourse.Web.Controllers
         {
             var categories = await _catalogService.GetAllCategoryAsync();
 
-            ViewBag.categoryList = new SelectList(categories,"Id","Name");
+            ViewBag.categoryList = new SelectList(categories, "Id", "Name");
             return View();
 
         }
@@ -52,7 +52,55 @@ namespace FreeCourse.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> Update(string id)
+        {
+            var course = await _catalogService.GetByCourseId(id);
 
+
+
+            if (course == null)
+            {
+                //Mesaj da göstermek lazım
+                RedirectToAction(nameof(Index));
+            }
+
+            var categories = await _catalogService.GetAllCategoryAsync();
+            ViewBag.categoryList = new SelectList(categories, "Id", "Name", course.Id);
+
+
+            CourseUpdateInput courseUpdateInput = new()
+            {
+                Id = course.Id,
+                Name = course.Name,
+                Price = course.Price,
+                Feature = new FeatureViewModel { Duration = course.Feature.Duration },
+                CategoryId = course.CategoryId,
+                UserId = course.UserId,
+                Picture = course.Picture,
+                Description = course.Description
+            };
+
+            return View(courseUpdateInput);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(CourseUpdateInput courseUpdateInput)
+        {
+
+
+            var categories = await _catalogService.GetAllCategoryAsync();
+            ViewBag.categoryList = new SelectList(categories, "Id", "Name", courseUpdateInput.Id);
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            await _catalogService.UpdateCourseAsync(courseUpdateInput);
+
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }
