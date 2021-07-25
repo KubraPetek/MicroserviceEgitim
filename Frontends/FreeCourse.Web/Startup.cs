@@ -48,6 +48,8 @@ namespace FreeCourse.Web
 
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();//Tüm handlerlar servis olarak buraya eklenmeli 
 
+            services.AddAccessTokenManagement(); //IClientCredentialTokenService -->servisi için eklendi 
+
             services.AddHttpClient<IUserService, UserService>(opt =>
             {
                 opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);

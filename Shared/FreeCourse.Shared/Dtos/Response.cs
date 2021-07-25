@@ -10,9 +10,9 @@ namespace FreeCourse.Shared.Dtos
         public T Data { get; set; }
 
         [JsonIgnore]//kendi içimde kullanmak istiyorum 
-        public int StatusCode { get; private set; }
+        public int StatusCode { get;  set; }
         [JsonIgnore]//Client bunlartı görmeyecek ama yazılım içinde kullanacağız
-        public bool IsSuccessful { get; private set; }
+        public bool IsSuccessful { get;  set; }
         public List<string> Errors { get; set; }
 
         //Static Factory Methods
