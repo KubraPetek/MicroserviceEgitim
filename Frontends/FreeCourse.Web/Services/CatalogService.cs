@@ -72,7 +72,7 @@ namespace FreeCourse.Web.Services
 
             responseSuccess.Data.ForEach(x =>
             {
-                x.Picture = _photoHelper.GetPhotoStockUrl(x.Picture);
+                x.StockPictureUrl = _photoHelper.GetPhotoStockUrl(x.Picture);
             });
 
 
@@ -92,7 +92,8 @@ namespace FreeCourse.Web.Services
 
             responseSuccess.Data.ForEach(x =>
             {
-                x.Picture = _photoHelper.GetPhotoStockUrl(x.Picture);
+                x.StockPictureUrl = _photoHelper.GetPhotoStockUrl(x.Picture);
+              
             });
 
             return responseSuccess.Data;
@@ -108,7 +109,9 @@ namespace FreeCourse.Web.Services
                 return null;
             }
             var responseSuccess = await response.Content.ReadFromJsonAsync<Response<CourseViewModel>>();
-            responseSuccess.Data.Picture = _photoHelper.GetPhotoStockUrl(responseSuccess.Data.Picture);
+           // responseSuccess.Data.Picture = _photoHelper.GetPhotoStockUrl(responseSuccess.Data.Picture);-->Bu uygun bir yöntem değil 
+
+            responseSuccess.Data.StockPictureUrl = _photoHelper.GetPhotoStockUrl(responseSuccess.Data.Picture);
        
             return responseSuccess.Data;
         }
