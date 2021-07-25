@@ -30,25 +30,37 @@ namespace FreeCourse.Web
 
             var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
 
-            services.AddScoped<ClientCredentialTokenHandler>();
+
+
+
 
             services.AddHttpClient<ICatalogService, CatalogService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
             }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
+            services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.PhotoStock.Path}");
+            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
-            services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();//HttpClient kullanýlan her servis buraya eklenmeli
+
 
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
 
+
+            services.AddScoped<ClientCredentialTokenHandler>();
 
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();//Tüm handlerlar servis olarak buraya eklenmeli 
 
             services.AddAccessTokenManagement(); //IClientCredentialTokenService -->servisi için eklendi 
+
+
+
+            services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();//HttpClient kullanýlan her servis buraya eklenmeli
 
             services.AddHttpClient<IUserService, UserService>(opt =>
             {
