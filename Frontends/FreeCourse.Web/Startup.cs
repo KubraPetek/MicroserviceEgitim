@@ -30,10 +30,12 @@ namespace FreeCourse.Web
 
             var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
 
+            services.AddScoped<ClientCredentialTokenHandler>();
+
             services.AddHttpClient<ICatalogService, CatalogService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
-            });
+            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
 
             services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();//HttpClient kullanýlan her servis buraya eklenmeli
