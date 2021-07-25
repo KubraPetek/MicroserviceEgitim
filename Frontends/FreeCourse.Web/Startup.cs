@@ -91,8 +91,9 @@ namespace FreeCourse.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error");//Bu bir middleware -->Canlýda çalýþýr burasý sadece  
             }
+
             app.UseStaticFiles();
 
             app.UseRouting();
