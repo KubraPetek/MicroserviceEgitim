@@ -1,4 +1,5 @@
-﻿using FreeCourse.Web.Models.PhotoStocks;
+﻿using FreeCourse.Shared.Dtos;
+using FreeCourse.Web.Models.PhotoStocks;
 using FreeCourse.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -25,14 +26,13 @@ namespace FreeCourse.Web.Services
             var response = await _httpClient.DeleteAsync($"photos?photoUrl={photoUrl}");
             return response.IsSuccessStatusCode;
         }
-
         public async Task<PhotoViewModel> UploadPhoto(IFormFile photo)
         {
-            if (photo==null||photo.Length<=0)
+            if (photo == null || photo.Length <= 0)
             {
                 return null;
             }
-            var randomFileName = $"{Guid.NewGuid().ToString()}.{Path.GetExtension(photo.FileName)}";//.jpg için nokta olmalı  mı burda ?
+            var randomFileName = $"{Guid.NewGuid().ToString()}{Path.GetExtension(photo.FileName)}";
 
             using var ms = new MemoryStream();
 
@@ -49,9 +49,9 @@ namespace FreeCourse.Web.Services
                 return null;
 
             }
-            return  await response.Content.ReadFromJsonAsync<PhotoViewModel>(); //bize bir url dönecek
+            var responseSucces = await response.Content.ReadFromJsonAsync<Response<PhotoViewModel>>(); //bize bir url dönecek
 
-
+            return responseSucces.Data;
         }
     }
 }

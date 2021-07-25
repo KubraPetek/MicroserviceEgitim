@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,5 +25,8 @@ namespace FreeCourse.Web.Models.Catalog
         [Required]
         public string CategoryId { get; set; }
         public string Picture { get; set; }
+
+        [Display(Name = "Kurs Resmi")]
+        public IFormFile PhotoFormFile { get; set; }
     }
 }
