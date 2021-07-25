@@ -20,9 +20,13 @@
                 <img src="@item.StockPictureUrl" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">@item.Name</h5>
+                    <span class="badge bg-primary">Kategori:@item.Category.Name </span>
                     <h4 class="text-primary">@item.Price</h4>
                     <p class="card-text">@item.ShortDescription</p>
-                    <a asp-controller="Home" asp-action="Detail" class="btn btn-success" asp-route-id="@item.Id">Detaylar...</a>
+
+                    <div>
+                        <a asp-controller="Home" asp-action="Detail" class="btn btn-success" asp-route-id="@item.Id">Detaylar...</a>
+                    </div>
                 </div>
             </div>
         </div>

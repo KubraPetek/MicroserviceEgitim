@@ -33,6 +33,7 @@ namespace FreeCourse.Web.Services
             else
             {
                 basket = new BasketViewModel();
+                basket.BasketItems = new List<BasketItemViewModel>();
                 basket.BasketItems.Add(basketItemViewModel);
             }
             await SaveOrUpdate(basket);
