@@ -50,7 +50,10 @@
                         <span class="text-danger" asp-validation-for="Feature.Duration"> </span>
                     </div>
 
-                    @*Resim input alanı gelecek*@
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="PhotoFormFile"></label>
+                        <input type="file" asp-for="PhotoFormFile" class="form-control" />
+                    </div>
 
                     <button type="submit" class="btn-block btn-primary">Kurs Güncelle</button>
 
