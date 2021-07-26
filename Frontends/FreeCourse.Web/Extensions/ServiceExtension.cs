@@ -22,10 +22,12 @@ namespace FreeCourse.Web.Extensions
 
             services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();//HttpClient kullanılan her servis buraya eklenmeli
 
+
             services.AddHttpClient<ICatalogService, CatalogService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
             }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
 
             services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt =>
             {
@@ -38,14 +40,22 @@ namespace FreeCourse.Web.Extensions
                 opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
+
             services.AddHttpClient<IBasketService, BasketService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Basket.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
+
             services.AddHttpClient<IDiscountService, DiscountService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Discount.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+
+            services.AddHttpClient<IPaymentService, PaymentService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.FakePayment.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
         }
     }
