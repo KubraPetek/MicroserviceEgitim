@@ -61,7 +61,7 @@ namespace FreeCourse.Web.Services
             };
             basket.BasketItems.ForEach(x =>
             {
-                var orderItem = new OrderItemCreateInput { ProductId = x.CourseId, PictureUrl = "", Price = x.Price, ProductName = x.CourseName };
+                var orderItem = new OrderItemCreateInput { ProductId = x.CourseId, PictureUrl = "", Price = x.GetCurrentPrice, ProductName = x.CourseName };
                 orderCreateInput.OrderItems.Add(orderItem);
             });
 
@@ -73,9 +73,13 @@ namespace FreeCourse.Web.Services
                 return new OrderCreatedViewModel() { Error = "Sipariş oluşturulamadı", IsSucces = false };
             }
 
-            var orderCreatedViewModel = await response.Content.ReadFromJsonAsync<OrderCreatedViewModel>();
+            var orderCreatedViewModel = await response.Content.ReadFromJsonAsync<Response<OrderCreatedViewModel>>();
+            orderCreatedViewModel.Data.IsSucces = true;
 
-            return orderCreatedViewModel;
+            //Data başarılı şekilde alındıoysa artık sepet silinmeli 
+            await _basketService.Delete();
+
+            return orderCreatedViewModel.Data;
 
         }
 
