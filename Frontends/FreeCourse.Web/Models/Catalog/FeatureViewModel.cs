@@ -9,7 +9,7 @@ namespace FreeCourse.Web.Models.Catalog
     public class FeatureViewModel
     {
         [Display(Name = "Kurs Süresi")]
-        [Required]
+
         public string Duration { get; set; }
     }
 }
