@@ -55,15 +55,14 @@
                             </div>
 
                         }
-                        @if (TempData["discountStatus"] != null && (bool)TempData["discountStatus"] == false)//uygulanan inidirm kodu db de yoksa
-                        {
-                            <div class="alert alert-danger">@Model.DiscountCode inidirm kodu geçersiz</div>
-                        }
-
                         <div class="input-group mb-3">
                             <input type="text" name="DiscountApplyInput.Code" class="form-control" />  <!--name="DiscountApplyInput.Code" isimlendirmnesi önemli buraya göre metoda mapler-->
                             <button type="submit" class="btn btn-secondary">Uygula</button>
                         </div>
+                        @if (TempData["discountStatus"] != null && (bool)TempData["discountStatus"] == false)//uygulanan inidirm kodu db de yoksa
+                        {
+                            <div class="alert alert-danger">@Model.DiscountCode inidirm kodu geçersiz</div>
+                        }
                         @if (TempData["discountError"] != null)
                         {
                             <div class="text-danger">@TempData["discountError"]</div>
