@@ -11,7 +11,7 @@ namespace FreeCourse.Web.Validators
     {
         public DiscountApplyInputValidator()
         {
-            RuleFor(x => x.Code).NotEmpty().WithMessage("İndiirm kupon alanı  boş olamaz.");
+            RuleFor(x => x.Code).NotEmpty().WithMessage("İndirim kupon alanı  boş olamaz.");
         }
     }
 }

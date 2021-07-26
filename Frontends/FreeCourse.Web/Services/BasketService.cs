@@ -47,7 +47,7 @@ namespace FreeCourse.Web.Services
             await CancelApplyDiscount();//İkinci bir kod uygulayamasın diye mevcutta varsa iptal ediyoruz 
 
             var basket = await Get();
-            if (basket==null||basket.DiscountCode==null )
+            if (basket==null )
             {
                 return false;
             }
@@ -58,8 +58,7 @@ namespace FreeCourse.Web.Services
             {
                 return false;
             }
-            basket.DiscountRate = hasDiscount.Rate;
-            basket.DiscountCode = hasDiscount.Code;
+            basket.ApplyDiscount(hasDiscount.Code, hasDiscount.Rate);
 
             return await SaveOrUpdate(basket);
 
@@ -73,7 +72,7 @@ namespace FreeCourse.Web.Services
                 return false;
 
             }
-            basket.DiscountCode = null;
+            basket.CancelDiscount();
             return await SaveOrUpdate(basket);
         }
 

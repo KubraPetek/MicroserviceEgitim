@@ -23,7 +23,7 @@ namespace FreeCourse.Web.Services
         {
             //api/[controller]/[action]/{code}
 
-            var response = await _httpClient.GetAsync($"discounts/GetByCode/{discountCode}");
+            var response = await _httpClient.GetAsync($"discounst/GetByCode/{discountCode}");
 
             if (!response.IsSuccessStatusCode)
             {
