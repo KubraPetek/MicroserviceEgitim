@@ -46,6 +46,24 @@
 
                     </table>
 
+                    <form asp-controller="Basket" asp-action="ApplyDiscount">
+                        @if (Model.HasDiscount)
+                        {
+                            <div class="alert alert-success">@Model.DiscountCode inidirm kodu uygulandı </div>
+                        }
+                        @if (TempData["discountStatus"] != null && (bool)TempData["discountStatus"] == false)//uygulanan inidirm kodu db de yoksa
+                        {
+                            <div class="alert alert-danger">@Model.DiscountCode inidirm kodu geçersiz</div>
+                        }
+
+                    <div class="input-group mb-3">
+                        <input type="text" name="DiscountApplyInput.Code" class="form-control" />  <!--name="DiscountApplyInput.Code" isimlendirmnesi önemli buraya göre metoda mapler-->
+                        <div asp-validation-summary="All"></div>
+                        <button type="submit" class="btn btn-secondary">Uygula</button>
+                    </div>
+
+                    </form>
+
 
 
                 }
