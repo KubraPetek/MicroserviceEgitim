@@ -1,5 +1,7 @@
+using FreeCourse.Services.Order.Application.Consumer;
 using FreeCourse.Services.Order.Infrastructure;
 using FreeCourse.Shared.Services;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -66,6 +68,32 @@ namespace FreeCourse.Services.Order.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreeCourse.Services.Order.API", Version = "v1" });
             });
+
+
+            services.AddMassTransit(x =>
+            {
+
+                x.AddConsumer<CreateOrderMessageCommandConsumer>();
+
+                //DefaultPort : 5672
+                x.UsingRabbitMq((contex, cfg) =>
+                {
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
+                    {
+                        host.Username("guest");
+                        host.Password("guest");
+                    });
+
+                    cfg.ReceiveEndpoint("create-order-service", e =>
+                    {
+                        e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(contex);
+                    });
+
+                });
+            });
+
+            services.AddMassTransitHostedService();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
