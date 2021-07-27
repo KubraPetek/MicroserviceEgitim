@@ -133,6 +133,7 @@ namespace FreeCourse.Web.Services
             {
                 return new OrderSuspendViewModel() { Error = "Sipariş oluşturulamadı", IsSucces = false };
             }
+            await _basketService.Delete();
             return new OrderSuspendViewModel() { IsSucces = true };
 
 
