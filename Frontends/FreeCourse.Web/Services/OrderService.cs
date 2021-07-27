@@ -91,9 +91,51 @@ namespace FreeCourse.Web.Services
 
         }
 
-        public Task SuspendOrder(CheckOutInfoInput checkOutInfoInput)
+        public async Task<OrderSuspendViewModel> SuspendOrder(CheckOutInfoInput checkOutInfoInput)
         {
-            throw new NotImplementedException();
+
+            var basket = await _basketService.Get();
+
+            var orderCreateInput = new OrderCreateInput()
+            {
+                BuyerId = _sharedIdentityService.GetUserId,
+                Address = new AddressCreateInput
+                {
+                    Province = checkOutInfoInput.Province,
+                    District = checkOutInfoInput.District,
+                    Street = checkOutInfoInput.Street,
+                    Line = checkOutInfoInput.Line,
+                    ZipCode = checkOutInfoInput.ZipCode
+                }
+            };
+
+            basket.BasketItems.ForEach(x =>
+            {
+                var orderItem = new OrderItemCreateInput { ProductId = x.CourseId, PictureUrl = "", Price = x.GetCurrentPrice, ProductName = x.CourseName };
+                orderCreateInput.OrderItems.Add(orderItem);
+            });
+
+
+            var paymentInfoInput = new PaymentInfoInput()
+            {
+                CardName = checkOutInfoInput.CardName,
+                CardNumber = checkOutInfoInput.CardNumber,
+                Expiration = checkOutInfoInput.Expiration,
+                CVV = checkOutInfoInput.CVV,
+                TotalPrice = checkOutInfoInput.TotalPrice,
+                Order=orderCreateInput
+            };
+
+
+            var response = await _httpClient.PostAsJsonAsync<OrderCreateInput>("orders", orderCreateInput);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return new OrderSuspendViewModel() { Error = "Sipariş oluşturulamadı", IsSucces = false };
+            }
+            return new OrderSuspendViewModel() { IsSucces = true };
+
+
         }
     }
 }

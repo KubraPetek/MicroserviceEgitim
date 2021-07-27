@@ -7,6 +7,10 @@ namespace FreeCourse.Shared.Messages
     //Sipariş oluşması için gerekli propertiler
     public class CreateOrderMessageCommand
     {
+        public CreateOrderMessageCommand()
+        {
+            OrderItems = new List<OrderItem>();
+        }
         public string BuyerId { get; set; }
         public List<OrderItem> OrderItems { get; set; }
         public string Province { get; set; }
