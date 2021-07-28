@@ -1,5 +1,6 @@
 using FreeCource.Service.Catalog.Services;
 using FreeCource.Service.Catalog.Settings;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -63,7 +64,21 @@ namespace FreeCource.Service.Catalog
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreeCource.Service.Catalog", Version = "v1" });
             });
 
-            
+            services.AddMassTransit(x =>
+            {
+
+                //DefaultPort : 5672
+                x.UsingRabbitMq((contex, cfg) =>
+                {
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
+                    {
+                        host.Username("guest");
+                        host.Password("guest");
+                    });
+                });
+            });
+
+           // services.AddMassTransitHostedService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
