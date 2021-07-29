@@ -21,7 +21,7 @@ namespace FreeCourse.IdentityServer.Services
         {
             var requestRaw = context.Request.Raw.ToString();
 
-            var token = context.Request.Raw.Get("subject-token");
+            var token = context.Request.Raw.Get("subject_token");
             if (string.IsNullOrEmpty(token))
             {
                 context.Result = new GrantValidationResult(IdentityServer4.Models.TokenRequestErrors.InvalidRequest, "token missing");
