@@ -58,6 +58,8 @@ namespace FreeCourse.IdentityServer
 
             builder.AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();//Token almak için kullanıc adı ve şifre ile istek yapılınca çalışacaks
 
+            builder.AddExtensionGrantValidator<TokenExchangeExtensionGrantValidator>();
+
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 
