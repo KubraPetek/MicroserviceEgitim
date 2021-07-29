@@ -65,7 +65,7 @@ namespace FreeCourse.IdentityServer
                  AllowOfflineAccess=true,
                  ClientSecrets={new Secret("secret".Sha256())},
                  AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,//refresh token da oluşturur
-                 AllowedScopes={"basket_fullpermission","discount_fullpermission","order_fullpermission","payment_fullpermission","gateway_fullpermission"
+                 AllowedScopes={"basket_fullpermission","order_fullpermission","gateway_fullpermission"
                      ,IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId
                      , IdentityServerConstants.StandardScopes.Profile,IdentityServerConstants.LocalApi.ScopeName
                      , IdentityServerConstants.StandardScopes.OfflineAccess },//Offlineaccess refresh token üretir -offline olsa dahi
@@ -73,6 +73,14 @@ namespace FreeCourse.IdentityServer
                  RefreshTokenExpiration=TokenExpiration.Absolute, //verilen süre sonunda refresh tokenin ömrü dolmuş olacak
                  AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,//60 günlük saniye verdik-->refresh tokenın ömrü 
                  RefreshTokenUsage=TokenUsage.ReUse//Token sonradan tekrar kullanılabilir olsun
+             },
+             new Client //user olmayan kullanıcıların erişimi için 
+             {
+                 ClientId="TokenExchangeClient",
+                 ClientName="Token Exchange Client",
+                 ClientSecrets={new Secret("secret".Sha256())},//şifrelemek için
+                 AllowedGrantTypes= new []{"urn:ietf:params:oauth:grant-type:token-exchange" },
+                 AllowedScopes={ "discount_fullpermission", "payment_fullpermission" , IdentityServerConstants.StandardScopes.OpenId }//izin verilen scopelar
              }
             };
     }
