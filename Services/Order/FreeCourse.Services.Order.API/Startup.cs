@@ -74,6 +74,7 @@ namespace FreeCourse.Services.Order.API
             {
 
                 x.AddConsumer<CreateOrderMessageCommandConsumer>();
+                x.AddConsumer<CourseNameChangedEventConsumer>();
 
                 //DefaultPort : 5672
                 x.UsingRabbitMq((contex, cfg) =>
@@ -88,6 +89,12 @@ namespace FreeCourse.Services.Order.API
                     {
                         e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(contex);
                     });
+
+                    cfg.ReceiveEndpoint("course-name-changed-event-order-service", e =>
+                    {
+                        e.ConfigureConsumer<CourseNameChangedEventConsumer>(contex);
+                    });
+
 
                 });
             });
