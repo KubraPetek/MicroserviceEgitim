@@ -26,7 +26,12 @@ services:
         image: basket_api_image
         build:
             context: .
-            dockerfile: Services/Basket/FreeCourse.Service.Basket/Dockerfile          
+            dockerfile: Services/Basket/FreeCourse.Service.Basket/Dockerfile
+    photostock.api:
+        image: photostock_api_image
+        build:
+            context: .
+            dockerfile: Services/PhotoStock/FreeCourse.Services.PhotoStock/Dockerfile           
 volumes: 
     catalogdb_volume:
     discount_volume:
