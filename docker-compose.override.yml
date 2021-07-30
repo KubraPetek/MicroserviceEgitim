@@ -29,7 +29,7 @@ services:
     ports:
       - "1433:1433"
     volumes: 
-      - identitydb_volume:/var/opt/mssql/data
+      - identitydb_volume:/var/opt/mssql
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password12*
@@ -39,7 +39,7 @@ services:
     ports:
       - "1444:1433"
     volumes: 
-      - orderdb_volume:/var/opt/mssql/data
+      - orderdb_volume:/var/opt/mssql
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password12*
@@ -57,7 +57,7 @@ services:
       - IdentityServerURL:http://identityserver.api:5001 
       - DatabaseSetting:ConnectionString=mongodb://catalogdb:27017
     ports: 
-      - "5011":"80"
+      - "5011:80"
     depends_on: 
       - catalogdb 
   identityserver.api:
@@ -66,8 +66,8 @@ services:
       - ASPNETCORE_ENVIROMENT=Development
       - "ConnectionStrings:DefaultConnection=Server=identitydb,1433;Database=identitydb; User=sa;Password=Password12*"    
     ports: 
-          - "5001":"80"
+      - "5001:80"
     depends_on: 
-          - identitydb 
+      - identitydb 
 
         

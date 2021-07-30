@@ -7,21 +7,21 @@ services:
     discountdb:
         image: postgres
     identitydb:
-        image: mcr.microsoft.com/mssql/server
+        image: mcr.microsoft.com/mssql/server:2019-latest
     orderdb:
-        image: mcr.microsoft.com/mssql/server
+        image: mcr.microsoft.com/mssql/server:2019-latest
     rabbitmq:
         image: rabbitmq:3.9.0-management
     catalog.api:
         image: catalog_api_image
         build:
             context: .
-            dockerfile: Services/Catalog/FreeCourse.Service.Catalog/Dockerfile 
+            dockerfile: Services/Catalog/FreeCource.Service.Catalog/Dockerfile 
     identityserver.api:
         image: identityserver_api_image
         build:
-        context: .
-        dockerfile: IdentityServer/FreeCourse.IdentityServer/Dockerfile            
+            context: .
+            dockerfile: IdentityServer/FreeCourse.IdentityServer/Dockerfile            
 volumes: 
     catalogdb_volume:
     discount_volume:
