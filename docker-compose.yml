@@ -21,7 +21,12 @@ services:
         image: identityserver_api_image
         build:
             context: .
-            dockerfile: IdentityServer/FreeCourse.IdentityServer/Dockerfile            
+            dockerfile: IdentityServer/FreeCourse.IdentityServer/Dockerfile   
+    basket.api:
+        image: basket_api_image
+        build:
+            context: .
+            dockerfile: Services/Basket/FreeCourse.Service.Basket/Dockerfile          
 volumes: 
     catalogdb_volume:
     discount_volume:
